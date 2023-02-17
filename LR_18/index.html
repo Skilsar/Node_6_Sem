@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div>
+        <table id="result"></table>
+        <button onclick="getAllPulpits()">Get pulpits</button>
+    </div>
+
+    <div id="error">
+
+    </div>
+
+    <div>
+        <label>Code</label> <br>
+        <input type="text" id="code"> <br>
+        <label>Pulpit_name</label> <br>
+        <input type="text" id="pname"> <br>
+        <label>Faculty</label> <br>
+        <input type="text" id="fac"> <br>
+        <div>
+            <button onclick="Post()">Send New Pulpit</button>
+            <button onclick="Put()">Update pulpit</button>
+        </div>
+
+    </div>
+    <div>
+        <label>Code for delete</label> <br>
+        <input type="text" id="del_code"> <br>
+        <button onclick="Delete()">Delete</button>
+    </div>
+
+    <script>
+        class MyError extends Error {
+            constructor(code, message) {
+                super('');
+                this.code = code;
+                this.custom_message = message;
+            }
+        }
+
+
+        function getAllPulpits() {
+            clearErrorField();
+            fetch('http://localhost:3000/api/pulpits', {
+                    method: "GET",
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(result => {
+                    return result.json()
+                })
+                .then(data => {
+                    let container = document.getElementById('result');
+                    container.innerHTML = '';
+                    container.innerHTML += `<tr>
+                        <th>PULPIT</th>
+                        <th>PULPIT_NAME</th>
+                        <th>FACULTY</th>
+                    </tr>`;
+                    data.forEach(element => {
+                        container.innerHTML += `<tr>
+                            <td>${element.pulpit}</td>
+                            <td>${element.pulpit_name}</td>
+                            <td>${element.faculty}</td>
+                        </tr>`;
+                    });
+                })
+        }
+
+        function Post() {
+            fetch('http://localhost:3000/api/pulpits', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        pulpit: code.value,
+                        pulpit_name: pname.value,
+                        faculty: fac.value
+                    })
+                })
+                .then(async (response) => {
+                    if (!response.ok) {
+                        let error_data = await response.json();
+                        let error = new Error(error_data.message);
+                        error.code = error_data.code;
+                        throw error;
+                    }
+
+                    return response.json();
+                })
+                .then((pdata) => {
+                    clearInputForm();
+                    getAllPulpits();
+                    let container = document.getElementById('error');
+                    container.innerHTML = '';
+                    if (pdata.pulpit)
+                        container.innerHTML =
+                        `<span style="color: green;">Pulpit: ${pdata.pulpit} pulpit_name: ${pdata.pulpit_name} faculty: ${pdata.faculty} </span>`
+                    else
+                        throw new Error('Некорректные данные')
+                })
+                .catch(error => {
+                    let error_container = document.getElementById('error');
+                    error_container.innerHTML = '';
+                    error_container.innerHTML = `<span style="color: red;">Error: ${error.message} </span>`;
+                });
+        }
+
+        function clearInputForm() {
+            code.value = '';
+            pname.value = '';
+            fac.value = '';
+        }
+
+        function Put() {
+            fetch('http://localhost:3000/api/pulpits', {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        pulpit: code.value,
+                        pulpit_name: pname.value,
+                        faculty: fac.value
+                    })
+                })
+                .then(async (response) => {
+                    if (!response.ok) {
+                        let error_data = await response.json();
+                        let error = new Error(error_data.message);
+                        error.code = error_data.code;
+                        throw error;
+                    }
+                    return response.json();
+                })
+                .then((pdata) => {
+                    clearInputForm();
+                    getAllPulpits();
+                    let container = document.getElementById('error');
+                    container.innerHTML = '';
+                    if (pdata.pulpit)
+                        container.innerHTML =
+                        `<span style="color: green;">Pulpit: ${pdata.pulpit} pulpit_name: ${pdata.pulpit_name} faculty: ${pdata.faculty} </span>`
+                    else
+                        throw new Error(pdata);
+                })
+                .catch(error => {
+                    let error_container = document.getElementById('error');
+                    error_container.innerHTML = '';
+                    error_container.innerHTML = `<span style="color: red;">Error: ${error.message} </span>`;
+                });
+        }
+
+        function Delete() {
+            fetch(`http://localhost:3000/api/pulpits/${del_code.value}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        pulpit: code.value,
+                        pulpit_name: pname.value,
+                        faculty: fac.value
+                    })
+                })
+                .then(async (response) => {
+                    if (!response.ok) {
+                        let error_data = await response.json();
+                        let error = new Error(error_data.message);
+                        error.code = error_data.code;
+                        throw error;
+                    }
+
+                    return response.json();
+                })
+                .then((pdata) => {
+                    clearInputForm();
+                    getAllPulpits();
+                    let container = document.getElementById('error');
+                    container.innerHTML = '';
+                    if (pdata.pulpit)
+                        container.innerHTML =
+                        `<span style="color: green;">Pulpit: ${pdata.pulpit} pulpit_name: ${pdata.pulpit_name} faculty: ${pdata.faculty} </span>`
+                    else
+                        throw new Error(pdata);
+                })
+                .catch(error => {
+                    let error_container = document.getElementById('error');
+                    error_container.innerHTML = '';
+                    error_container.innerHTML = `<span style="color: red;">Error: ${error.message} </span>`;
+                });
+        }
+
+        function clearErrorField() {
+            document.getElementById('error').innerHTML = '';
+        }
+    </script>
+</body>
+
+</html>
