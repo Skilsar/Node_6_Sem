@@ -152,9 +152,11 @@ function internalORM(sequelize) {
             auditoriumsgt60() {
                 return {
                     where: {
-                        auditorium_capacity: {
-                            [Sequelize.Op.gte]: 60
-                        }
+                        auditorium_capacity: {[Sequelize.Op.and]:
+                            {
+                                [Sequelize.Op.gt]:10,
+                                [Sequelize.Op.lt]:60 }
+                            }
                     }
                 };
             }
@@ -169,6 +171,11 @@ function internalORM(sequelize) {
         as: 'pulpit_teachers',
         foreignKey: 'pulpit',
         sourceKey: 'pulpit'
+    });
+    Auditorium.hasMany(Auditorium_type,{
+        as:'auditorium_type_auditorium',
+        foreignKey:'auditorium_type',
+        sourceKey:'auditorium_type'
     });
 }
 exports.ORM = (s) => {

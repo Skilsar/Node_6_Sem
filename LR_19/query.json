@@ -1,0 +1,28 @@
+[
+    {
+        "comment": "http//localhost:3000/api/faculties"
+    },
+    {
+        "faculty": "HGGF",
+        "faculty_name": "HGG faculty",
+        "pulpit": [
+            {
+                "PULPIT": "HGGP1",
+                "PULPIT_NAME": "HGG1 Pulp name"
+            },
+            {
+                "PULPIT": "HGGP2",
+                "PULPIT_NAME": "HGG 2 Pulp"
+            }
+        ]
+    },
+    {
+        "comment": "http//localhost:3000/api/pulpits"
+    },
+    {
+        "PULPIT": "HGGP3",
+        "PULPIT_NAME": "HGGP3 Name",
+        "FACULTY": "HGGF2",
+        "FACULTY_NAME": "HGG F2 Name"
+    }
+]
