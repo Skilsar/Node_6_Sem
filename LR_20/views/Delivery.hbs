@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List Deliveries</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h1><a href="http://localhost:3000/html/delivery/">List Deliveries</a></h1>
+     <table>
+         <tr><th>DeliveryID</th><th>ProductID</th><th>StoreID</th><th>DeliveryDate</th><th>ProductCount</th></tr>
+         {{#each deliveries}}
+            <tr><td>{{this.deliveries_id}}</td><td>{{this.product_id}}</td><td>{{this.store_id}}</td><td>{{this.delivery_date}}</td><td>{{this.product_count}}</td></tr>
+         {{/each}}
+     </table>
+
+     <h1>Find Delivery</h1>
+      <table>
+         <tr><th>DeliveryID</th><th>ProductID</th><th>StoreID</th><th>DeliveryDate</th><th>ProductCount</th></tr>
+         {{#each find_delivery}}
+            <tr><td>{{this.deliveries_id}}</td><td>{{this.product_id}}</td><td>{{this.store_id}}</td><td>{{this.delivery_date}}</td><td>{{this.product_count}}</td></tr>
+         {{/each}}
+     </table>
+        <label>DeliveryId</label>
+        <input type="number" name="deliveries_id" id="findId" /><br><br>
+        <input type="submit" onclick="findDelivery()" value="Find Delivery" />
+
+     <h1>Add Delivery</h1>
+     {{!-- <form action="../products" method="POST"> --}}
+        <label>ProductID</label>
+        <input type="number" name="product_id" id="product_id" /><br><br>
+        <label>StoreID</label>
+        <input type="number" name="store_id" id="store_id" /><br><br>
+        <label>DeliveryDate</label>
+        <input type="date" name="delivery_date" id="delivery_date" /><br><br>
+        <label>ProductCount</label>
+        <input type="number" name="product_count" id="product_count" /><br><br>
+        <input type="submit" onclick="addDelivery()" value="Add Delivery" />
+     {{!-- </form> --}}
+  
+     <h1>Update Delivery</h1>
+     {{!-- <form action="../products?_method=PUT" method="POST"> --}}
+        <label>DeliveryID</label>
+        <input type="number" name="deliveries_id" id="updID" /><br><br>
+        <label>ProductID</label>
+        <input type="number" name="product_id" id="upd_product_id" /><br><br>
+        <label>StoreID</label>
+        <input type="number" name="store_id" id="upd_store_id" /><br><br>
+        <label>DeliveryDate</label>
+        <input type="date" name="delivery_date" id="upd_delivery_date" /><br><br>
+        <label>ProductCount</label>
+        <input type="number" name="product_count" id="upd_product_count" /><br><br>
+        <input type="submit" onclick="updDelivery()" value="Update Delivery" />
+     {{!-- </form> --}}
+     
+     <h1>Delete Delivery</h1>
+     {{!-- <form action="../customer/<?" method="DELETE"> --}}
+        <label>DeliveryeID</label>
+        <input id="delivery_id" type="number" name="delivery_id" /><br><br>
+        <input type="submit" onClick="deleteDelivery()" value="Delete Delivery" />
+     {{!-- </form> --}}
+     <script>
+         addDelivery = () => {
+            let product_id = document.getElementById("product_id").value;
+            let store_id = document.getElementById("store_id").value;
+            let delivery_date = document.getElementById("delivery_date").value;
+            let product_count = document.getElementById("product_count").value;
+            let bodyData = {
+               product_id: product_id,
+               store_id: store_id,
+               delivery_date: delivery_date,
+               product_count: product_count,
+            }
+            console.log(`Data: ${bodyData}`);
+            fetch(`http://localhost:3000/delivery`, {
+                method: 'POST',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify(bodyData)
+            });
+            setTimeout(() => { window.location.reload(); }, 500);
+         }
+
+         updDelivery = () => {
+            let deliveries_id = document.getElementById("updID").value;
+            let product_id = document.getElementById("upd_product_id").value;
+            let store_id = document.getElementById("upd_store_id").value;
+            let delivery_date = document.getElementById("upd_delivery_date").value;
+            let product_count = document.getElementById("upd_product_count").value;
+            let bodyData = {
+               deliveries_id: deliveries_id,
+               product_id: product_id,
+               store_id: store_id,
+               delivery_date: delivery_date,
+               product_count: product_count,
+            }
+            console.log(`Data: ${bodyData}`);
+            fetch(`http://localhost:3000/delivery`, {
+                method: 'PUT',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify(bodyData)
+            });
+            setTimeout(() => { window.location.reload(); }, 500);
+         }
+
+         findDelivery = () => {
+            let deliveries_id = document.getElementById("findId").value;
+            window.location.href = `http://localhost:3000/delivery/${deliveries_id}`;
+         }
+
+         deleteDelivery = () => {
+            let ID = document.getElementById("delivery_id").value;
+            console.log(ID);
+            fetch(`http://localhost:3000/delivery/${ID}`, {
+                method: 'DELETE',
+            });
+            setTimeout(() => { window.location.reload(); }, 500);
+         }
+     </script>
+</body>
+<html>

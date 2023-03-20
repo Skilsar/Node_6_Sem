@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List Stors</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h1>List Stors</h1>
+     <table>
+         <tr><th>StorID</th><th>StoreName</th><th>City</th></tr>
+         {{#each stors}}
+            <tr><td>{{this.store_id}}</td><td>{{this.store_name}}</td><td>{{this.store_city}}</td></tr>
+         {{/each}}
+     </table>
+
+     <h1>Find Store</h1>
+      <table>
+         <tr><th>StorID</th><th>StoreName</th><th>City</th></tr>
+         {{#each find_store}}
+            <tr><td>{{this.store_id}}</td><td>{{this.store_name}}</td><td>{{this.store_city}}</td></tr>
+         {{/each}}
+     </table>
+        <label>StoreName</label>
+        <input type="text" name="category_name" id="findName" /><br><br>
+        <input type="submit" onclick="findStore()" value="Find Store" />
+
+     <h1>Add Store</h1>
+     {{!-- <form action="../store" method="POST"> --}}
+        <label>StoreName</label>
+        <input type="text" name="store_name" id="store_name" /><br><br>
+        <label>City</label>
+        <input type="text" name="store_city" id="store_city"/><br><br>
+        <input type="submit" onclick="addStore()" value="Add Store" />
+     {{!-- </form> --}}
+     
+     <h1>Update Store</h1>
+     {{!-- <form action="../store?_method=PUT" method="POST"> --}}
+        <label>StoreID</label>
+        <input type="number" name="store_id" id="updID" /><br><br>
+        <label>StoreName</label>
+        <input type="text" name="store_name" id="updName" /><br><br>
+        <label>StoreCity</label>
+        <input type="text" name="store_city" id="updCity"/><br><br>
+        <input type="submit" onclick="updStore()" value="Update Store" />
+     {{!-- </form> --}}
+     
+     <h1>Delete Store</h1>
+     {{!-- <form action="../customer/<?" method="DELETE"> --}}
+        <label>StoreID</label>
+        <input id="store_id" type="number" name="store_id" /><br><br>
+        <input type="submit" onClick="deleteStore()" value="Delete Store" />
+     {{!-- </form> --}}
+     <script>
+         addStore = () => {
+            let store_name = document.getElementById("store_name").value;
+            let store_city = document.getElementById("store_city").value;
+            let bodyData = {
+               store_name: store_name,
+               store_city: store_city,
+            }
+            console.log(`Data: ${bodyData}`);
+            fetch(`http://localhost:3000/store`, {
+                method: 'POST',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify(bodyData)
+            });
+            setTimeout(() => { window.location.reload(); }, 500);
+         }
+
+         updStore = () => {
+            let store_id = document.getElementById("updID").value;
+            let store_name = document.getElementById("updName").value;
+            let store_city = document.getElementById("updCity").value;
+            let bodyData = {
+               store_id: store_id,
+               store_name: store_name,
+               store_city: store_city,
+            }
+            console.log(`Data: ${bodyData}`);
+            fetch(`http://localhost:3000/store`, {
+                method: 'PUT',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify(bodyData)
+            });
+            setTimeout(() => { window.location.reload(); }, 500);
+         }
+
+         findStore = () => {
+            let store_name = document.getElementById("findName").value;
+            window.location.href = `http://localhost:3000/store/${store_name}`;
+         }
+
+         deleteStore = () => {
+            let ID = document.getElementById("store_id").value;
+            console.log(ID);
+            fetch(`http://localhost:3000/store/${ID}`, {
+            method: 'DELETE',
+            });
+            setTimeout(() => { window.location.reload(); }, 500);
+         }
+     </script>
+</body>
+<html>

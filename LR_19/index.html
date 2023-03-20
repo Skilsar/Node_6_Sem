@@ -1,171 +1,270 @@
 <!DOCTYPE html>
 <html>
-<head>
-	<title></title>
-	<style>
-        table {
-            border-collapse: collapse;
-            margin: 20px;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-        }
-        th {
-            background-color: lightgray;
-        }
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin: 20px;
-        }
-        .page {
-            margin: 0 10px;
-        }
-        .active {
-            font-weight: bold;
-        }
-    </style>
-</head>
-<body>
-	<input type="text" id="PULPIT" placeholder="PULPIT">
-	<input type="text" id="PULPIT_NAME" placeholder="PULPIT_NAME">
-	<input type="text" id="FACULTY" placeholder="FACULTY">
-	<button onclick="Get_pulpits()" >GET</button>
-	<button onclick="Post_pulpits()" >POST</button>
-	<button onclick="Put_pulpits()" >PUT</button>
-	<button onclick="Delete_pulpits()" >DELETE</button>
+  <head>
+    <title>LR_03</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css"
+    />
+    <link rel="stylesheet" href="//pcproject.h1n.ru/style.css" />
+  </head>
 
-	<div id="result_get">
-		<table id="departmentsTable">
-			<thead>
-				<tr>
-					<th>PULPIT</th>
-					<th>PULPIT_NAME</th>
-					<th>FACULTY</th>
-					<th>Count</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
-		<div class="pagination" id="pagination">
-		</div>
-	</div>
-	<div id="result_post"></div>
-	<div id="result_put"></div>
-	<div id="result_delete"></div>
-	<script type="text/javascript">
-		Get_pulpits();
-		async	function Get_pulpits(){
-			let response = await fetch("http://localhost:3000/api/pulpitshtml");
-			if(response.ok){
-				result="";
-				let departments=await response.json();
-				const table = document.getElementById("departmentsTable").getElementsByTagName('tbody')[0];
-                const pagination = document.getElementById("pagination");
+  <body>
+    <header class="p-3 bg-dark text-white">
+      <div class="container">
+        <div
+          class="d-flex flex-wrap justify-content-center justify-content-lg-start"
+        >
+          <a
+            href="/"
+            class="d-flex text-left mb-2 mb-lg-0 text-white text-decoration-none"
+          >
+            <h2>LR_03 NODE.JS</h2>
+          </a>
 
-// Количество записей на странице
-const recordsPerPage = 10;
+          <div class="col align-content-lg-end text-end">
+            <button class="btn btn-outline-light" onclick="Get_pulpits()">
+              <i class="bi bi-card-list"></i> GET
+            </button>
+            <a
+              class="btn btn-outline-light"
+              target="_blank"
+              href="//t.me/Skilsar"
+              ><i class="bi bi-person"></i> Author: Skilsar
+            </a>
+          </div>
+        </div>
+      </div>
+    </header>
 
-// Общее количество страниц
-const totalPages = Math.ceil(departments.length / recordsPerPage);
+    <ul class="circles">
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
 
-// Функция для отображения страницы
-function showPage(page) {
-    // Определяем начало и конец вывода записей на странице
-    const start = (page - 1) * recordsPerPage;
-    const end = start + recordsPerPage;
+    <div
+      class="d-flex align-items-center justify-content-center pt-md-5 mt-5 flex-column"
+    >
+      <div class="p-4 border border-2" style="width: 600px">
+        <div class="row pb-2">
+          <h2 class="text-primary text-center">Result data</h2>
+        </div>
+        <div class="bg-white" id="result_get">
+          <table id="departmentsTable">
+            <thead>
+              <tr>
+                <th>PULPIT</th>
+                <th>PULPIT_NAME</th>
+                <th>FACULTY</th>
+                <th>Count</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="pagination" id="pagination"></div>
+        <div id="result_post"></div>
+        <div id="result_put"></div>
+        <div id="result_delete"></div>
+        <div class="row">
+          <div class="row pb-2">
+            <h2 class="text-primary text-center">Input data</h2>
+          </div>
+          <input
+            class="form-control text-box single-line"
+            type="text"
+            id="PULPIT"
+            placeholder="PULPIT"
+          />
+          <input
+            class="form-control text-box single-line"
+            type="text"
+            id="PULPIT_NAME"
+            placeholder="PULPIT_NAME"
+          />
+          <input
+            class="form-control text-box single-line"
+            type="text"
+            id="FACULTY"
+            placeholder="FACULTY"
+          />
+        </div>
+        <div class="row justify-content-center">
+          <div class="row pb-2">
+            <h2 class="text-primary text-center">Controls</h2>
+          </div>
+          <button
+            class="btn btn-outline-light col-sm-5"
+            onclick="Get_pulpits()"
+          >
+            GET
+          </button>
+          <button
+            class="btn btn-outline-light col-sm-5"
+            onclick="Post_pulpits()"
+          >
+            POST
+          </button>
+          <button
+            class="btn btn-outline-light col-sm-5"
+            onclick="Put_pulpits()"
+          >
+            PUT
+          </button>
+          <button
+            class="btn btn-outline-light col-sm-5"
+            onclick="Delete_pulpits()"
+          >
+            DELETE
+          </button>
+        </div>
+      </div>
+    </div>
 
-    // Очищаем таблицу
-    table.innerHTML = "";
-    
-    // Выводим записи на странице
-    for (let i = start; i < end && i < departments.length; i++) {
-        const department = departments[i];
-        const row = table.insertRow();
-        const PULPIT = row.insertCell();
-        const PULPIT_NAME = row.insertCell();
-		const FACULTY = row.insertCell();
-		const COUNT = row.insertCell();
-        PULPIT.innerHTML = department.PULPIT;
-        PULPIT_NAME.innerHTML = department.PULPIT_NAME;
-		FACULTY.innerHTML = department.FACULTY;
-		COUNT.innerHTML = department._count.TEACHER_TEACHER_PULPITToPULPIT;
-    }
+    <div class="container body-content">
+      <footer class="bottom m-3 mb-0 mt-0 text-white">
+        <hr />
+        <p>
+          &copy; Copyright. 2023 Created by <a href="//t.me/Skilsar">Skilsar</a>
+        </p>
+      </footer>
+    </div>
 
-    // Отображаем пагинацию
-    pagination.innerHTML = "";
-    for (let i = 1; i <= totalPages; i++) {
-        const pageButton = document.createElement("button");
-        pageButton.classList.add("page");
-        if (i === page) {
-            pageButton.classList.add("active");
+    <script type="text/javascript">
+      Get_pulpits();
+      async function Get_pulpits() {
+        let response = await fetch("http://localhost:3000/api/pulpitshtml");
+        if (response.ok) {
+          result = "";
+          let departments = await response.json();
+          const table = document
+            .getElementById("departmentsTable")
+            .getElementsByTagName("tbody")[0];
+          const pagination = document.getElementById("pagination");
+
+          // Количество записей на странице
+          const recordsPerPage = 10;
+
+          // Общее количество страниц
+          const totalPages = Math.ceil(departments.length / recordsPerPage);
+
+          // Функция для отображения страницы
+          function showPage(page) {
+            // Определяем начало и конец вывода записей на странице
+            const start = (page - 1) * recordsPerPage;
+            const end = start + recordsPerPage;
+
+            // Очищаем таблицу
+            table.innerHTML = "";
+
+            // Выводим записи на странице
+            for (let i = start; i < end && i < departments.length; i++) {
+              const department = departments[i];
+              const row = table.insertRow();
+              const PULPIT = row.insertCell();
+              const PULPIT_NAME = row.insertCell();
+              const FACULTY = row.insertCell();
+              const COUNT = row.insertCell();
+              PULPIT.innerHTML = department.PULPIT;
+              PULPIT_NAME.innerHTML = department.PULPIT_NAME;
+              FACULTY.innerHTML = department.FACULTY;
+              COUNT.innerHTML =
+                department._count.TEACHER_TEACHER_PULPITToPULPIT;
+            }
+
+            // Отображаем пагинацию
+            pagination.innerHTML = "";
+            for (let i = 1; i <= totalPages; i++) {
+              const pageButton = document.createElement("button");
+              pageButton.classList.add("page");
+              if (i === page) {
+                pageButton.classList.add("active");
+              }
+              pageButton.innerText = i;
+              pageButton.onclick = function () {
+                showPage(i);
+              };
+              pagination.appendChild(pageButton);
+            }
+          }
+
+          // Отображаем первую страницу
+          showPage(1);
         }
-        pageButton.innerText = i;
-        pageButton.onclick = function() {
-            showPage(i);
-        }
-        pagination.appendChild(pageButton);
-    }
-}
+      }
+      async function Post_pulpits() {
+        send = JSON.stringify({
+          PULPIT: document.getElementById("PULPIT").value,
+          PULPIT_NAME: document.getElementById("PULPIT_NAME").value,
+          FACULTY: document.getElementById("FACULTY").value,
+        });
 
-// Отображаем первую страницу
-showPage(1);
-			
-			}
-		};
-		async	function Post_pulpits() {
-			send=JSON.stringify({"PULPIT":document.getElementById("PULPIT").value
-				,"PULPIT_NAME":document.getElementById("PULPIT_NAME").value,"FACULTY":document.getElementById("FACULTY").value});
-		
-			let response = await fetch("http://localhost:3000/api/pulpits",{
-				method:"POST",
-				headers:{"Content-Type":"application/json"},
-				body:send
-			});
-			if(response.ok){
-				
-				let json=await response.text();
-				document.getElementById("result_post").innerHTML+="iserting";
-			}else{
-				let json=await response.json();
-				document.getElementById("result_post").innerHTML="result_post:"+json["ERROR"];
-			}
-		}
-		async	function Put_pulpits() {
-			send=JSON.stringify({"PULPIT":document.getElementById("PULPIT").value
-				,"PULPIT_NAME":document.getElementById("PULPIT_NAME").value,"FACULTY":document.getElementById("FACULTY").value});
-			let response = await fetch("http://localhost:3000/api/pulpits",{
-				method:"PUT",
-				headers:{"Content-Type":"application/json"},
-				body:send
-			});
-			if(response.ok){
-				
-				let json=await response.text();
-				document.getElementById("result_put").innerHTML+="Updating";
-			}else{
-				let json=await response.json();
-				document.getElementById("result_put").innerHTML="result_put:"+json["ERROR"];
-			}
-		}
-		async	function Delete_pulpits() {
-			url="http://localhost:3000/api/pulpits/"+document.getElementById("PULPIT").value;
-			let response = await fetch(url,{
-				method:"DELETE"
-			});
-			if(response.ok){
-				
-				let json=await response.text();
-				document.getElementById("result_delete").innerHTML+="Deleting";
-			}else{
-				let json=await response.json();
-				document.getElementById("result_delete").innerHTML="result_delete:"+json["ERROR"];
-			}
-		}
-  // функция для отображения списка кафедр на основе номера страницы
-  function showDepartments(page) {
+        let response = await fetch("http://localhost:3000/api/pulpits", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: send,
+        });
+        if (response.ok) {
+          let json = await response.text();
+          document.getElementById("result_post").innerHTML += "iserting";
+        } else {
+          let json = await response.json();
+          document.getElementById("result_post").innerHTML =
+            "result_post:" + json["ERROR"];
+        }
+      }
+      async function Put_pulpits() {
+        send = JSON.stringify({
+          PULPIT: document.getElementById("PULPIT").value,
+          PULPIT_NAME: document.getElementById("PULPIT_NAME").value,
+          FACULTY: document.getElementById("FACULTY").value,
+        });
+        let response = await fetch("http://localhost:3000/api/pulpits", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: send,
+        });
+        if (response.ok) {
+          let json = await response.text();
+          document.getElementById("result_put").innerHTML += "Updating";
+        } else {
+          let json = await response.json();
+          document.getElementById("result_put").innerHTML =
+            "result_put:" + json["ERROR"];
+        }
+      }
+      async function Delete_pulpits() {
+        url =
+          "http://localhost:3000/api/pulpits/" +
+          document.getElementById("PULPIT").value;
+        let response = await fetch(url, {
+          method: "DELETE",
+        });
+        if (response.ok) {
+          let json = await response.text();
+          document.getElementById("result_delete").innerHTML += "Deleting";
+        } else {
+          let json = await response.json();
+          document.getElementById("result_delete").innerHTML =
+            "result_delete:" + json["ERROR"];
+        }
+      }
+      // функция для отображения списка кафедр на основе номера страницы
+      function showDepartments(page) {
         // получаем элементы списка кафедр и кнопок пагинации
         var departmentList = document.getElementById("department-list");
         var paginationButtons = document.getElementById("pagination-buttons");
@@ -194,6 +293,17 @@ showPage(1);
           }
         }
       }
-	</script>
-</body>
+    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+      integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>

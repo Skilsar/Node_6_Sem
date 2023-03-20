@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List Manufacture</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h1><a href="http://localhost:3000/html/manufacturers/">List Manufacture</a></h1>
+     <table>
+         <tr><th>ManufactureID</th><th>ManufactureName</th></tr>
+         {{#each manufacturer}}
+            <tr><td>{{this.manufacturer_id}}</td><td>{{this.manufacturer_name}}</td></tr>
+         {{/each}}
+     </table>
+
+     <h1>Find Manufacture</h1>
+      <table>
+         <tr><th>ManufactureID</th><th>ManufactureName</th></tr>
+         {{#each find_manufacturer}}
+            <tr><td>{{this.manufacturer_id}}</td><td>{{this.manufacturer_name}}</td></tr>
+         {{/each}}
+     </table>
+        <label>ManufactureName</label>
+        <input type="text" name="manufacturer_name" id="findName" /><br><br>
+        <input type="submit" onclick="findManufacture()" value="Find Manufacture" />
+
+     <h1>Add Manufacture</h1>
+     {{!-- <form action="../manufacturers" method="POST"> --}}
+        <label>ManufactureName</label>
+        <input type="text" name="manufacturer_name" id="manufacturer_name" /><br><br>
+        <input type="submit" onclick="addManufacture()" value="Add Manufacture" />
+     {{!-- </form> --}}
+  
+     <h1>Update Manufacture</h1>
+     {{!-- <form action="../manufacturers?_method=PUT" method="POST"> --}}
+        <label>ManufactureID</label>
+        <input type="number" name="manufacturer_id" id="updID" /><br><br>
+        <label>ManufactureName</label>
+        <input type="text" name="manufacturer_name" id="updName" /><br><br>
+        <input type="submit" onclick="updManufacture()" value="Update Manufacture" />
+     {{!-- </form> --}}
+     
+     <h1>Delete Manufacture</h1>
+     {{!-- <form action="../customer/<?" method="DELETE"> --}}
+        <label>ManufactureeID</label>
+        <input id="manufacturer_id" type="number" name="manufacturer_id" /><br><br>
+        <input type="submit" onClick="deleteManufacture()" value="Delete Manufacture" />
+     {{!-- </form> --}}
+     <script>
+         addManufacture = () => {
+            let manufacturer_name = document.getElementById("manufacturer_name").value;
+            let bodyData = {
+               manufacturer_name: manufacturer_name
+            }
+            console.log(`Data: ${bodyData}`);
+            fetch(`http://localhost:3000/manufacturers`, {
+                method: 'POST',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify(bodyData)
+            });
+            setTimeout(() => { window.location.reload(); }, 500);
+         }
+
+         updManufacture = () => {
+            let manufacturer_id = document.getElementById("updID").value;
+            let manufacturer_name = document.getElementById("updName").value;
+            let bodyData = {
+               manufacturer_id: manufacturer_id,
+               manufacturer_name: manufacturer_name
+            }
+            console.log(`Data: ${bodyData}`);
+            fetch(`http://localhost:3000/manufacturers`, {
+                method: 'PUT',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify(bodyData)
+            });
+            setTimeout(() => { window.location.reload(); }, 500);
+         }
+
+         findManufacture = () => {
+            let manufacturer_name = document.getElementById("findName").value;
+            window.location.href = `http://localhost:3000/manufacturers/${manufacturer_name}`;
+         }
+
+         deleteManufacture = () => {
+            let ID = document.getElementById("manufacturer_id").value;
+            console.log(ID);
+            fetch(`http://localhost:3000/manufacturers/${ID}`, {
+                method: 'DELETE',
+            });
+            setTimeout(() => { window.location.reload(); }, 500);
+         }
+     </script>
+</body>
+<html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List Stors</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h1>List Stors</h1>
+     <table>
+         <tr><th>StorID</th><th>StoreName</th><th>City</th></tr>
+         {{#each stors}}
+            <tr><td>{{this.store_id}}</td><td>{{this.store_name}}</td><td>{{this.store_city}}</td></tr>
+         {{/each}}
+     </table>
+
+     <h1>Add Stor</h1>
+     <form action="../store" method="POST">
+        <label>StoreName</label>
+        <input type="text" name="store_name" /><br><br>
+        <label>City</label>
+        <input type="text" name="store_city"/><br><br>
+        <input type="submit" value="Add Store" />
+     </form>
+     
+     <h1>Update Stor</h1>
+     <form action="../store?_method=PUT" method="POST">
+        <label>StoreID</label>
+        <input type="number" name="store_id" /><br><br>
+        <label>StoreName</label>
+        <input type="text" name="store_name" /><br><br>
+        <label>StoreCity</label>
+        <input type="text" name="store_city"/><br><br>
+        <input type="submit" value="Update Store" />
+     </form>
+     
+     <h1>Delete Stor</h1>
+     {{!-- <form action="../customer/<?" method="DELETE"> --}}
+        <label>StoreID</label>
+        <input id="store_id" type="number" name="store_id" /><br><br>
+        <input type="submit" onClick="deleteCust()" value="Delete Store" />
+     {{!-- </form> --}}
+     <script>
+        deleteCust = () => {
+            let ID = document.getElementById("store_id").value;
+            console.log(ID);
+            fetch(`http://localhost:3000/store/${ID}`, {
+                method: 'DELETE',
+            });
+            window.location.reload();
+        }
+     </script>
+</body>
+<html>

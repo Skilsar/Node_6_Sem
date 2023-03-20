@@ -103,7 +103,7 @@ module.exports = {
       },
     }).then(() => {
       const audit = conn.AUDITORIUM.findMany();
-      console.log("-commit", r);
+      console.log("-commit");
       setTimeout(() => {
         conn.$queryRaw("ROLLBACK");
         console.log("---rollback");

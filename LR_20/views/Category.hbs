@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List Category</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h1><a href="http://localhost:3000/html/category/">List Category</a></h1>
+     <table>
+         <tr><th>CategoryID</th><th>CategoryName</th></tr>
+         {{#each category}}
+            <tr><td>{{this.category_id}}</td><td>{{this.category_name}}</td></tr>
+         {{/each}}
+     </table>
+
+     <h1>Find Category</h1>
+      <table>
+         <tr><th>CategoryID</th><th>CategoryName</th></tr>
+         {{#each find_category}}
+            <tr><td>{{this.category_id}}</td><td>{{this.category_name}}</td></tr>
+         {{/each}}
+     </table>
+        <label>CategoryName</label>
+        <input type="text" name="category_name" id="findName" /><br><br>
+        <input type="submit" onclick="findCat()" value="Find Category" />
+
+     <h1>Add Category</h1>
+     {{!-- <form action="../category" method="POST"> --}}
+        <label>CategoryName</label>
+        <input type="text" name="category_name" id="category_name" /><br><br>
+        <input type="submit" onclick="addCat()" value="Add Category" />
+     {{!-- </form> --}}
+  
+     <h1>Update Category</h1>
+     {{!-- <form action="../category?_method=PUT" method="POST"> --}}
+        <label>CategoryID</label>
+        <input type="number" name="category_id" id="updID" /><br><br>
+        <label>CategoryName</label>
+        <input type="text" name="category_name" id="updName" /><br><br>
+        <input type="submit" onclick="updCat()" value="Update Category" />
+     {{!-- </form> --}}
+     
+     <h1>Delete Category</h1>
+     {{!-- <form action="../customer/<?" method="DELETE"> --}}
+        <label>CategoryeID</label>
+        <input id="category_id" type="number" name="category_id" /><br><br>
+        <input type="submit" onClick="deleteCat()" value="Delete Category" />
+     {{!-- </form> --}}
+     <script>
+         addCat = () => {
+            let category_name = document.getElementById("category_name").value;
+            let bodyData = {
+               category_name: category_name
+            }
+            console.log(`Data: ${bodyData}`);
+            fetch(`http://localhost:3000/category`, {
+                method: 'POST',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify(bodyData)
+            });
+            setTimeout(() => { window.location.reload(); }, 500);
+         }
+
+         updCat = () => {
+            let category_id = document.getElementById("updID").value;
+            let category_name = document.getElementById("updName").value;
+            let bodyData = {
+               category_id: category_id,
+               category_name: category_name
+            }
+            console.log(`Data: ${bodyData}`);
+            fetch(`http://localhost:3000/category`, {
+                method: 'PUT',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify(bodyData)
+            });
+            setTimeout(() => { window.location.reload(); }, 500);
+         }
+
+         findCat = () => {
+            let category_name = document.getElementById("findName").value;
+            window.location.href = `http://localhost:3000/category/${category_name}`;
+         }
+
+         deleteCat = () => {
+            let ID = document.getElementById("category_id").value;
+            console.log(ID);
+            fetch(`http://localhost:3000/category/${ID}`, {
+                method: 'DELETE',
+            });
+            setTimeout(() => { window.location.reload(); }, 500);
+         }
+     </script>
+</body>
+<html>

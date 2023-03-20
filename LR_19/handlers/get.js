@@ -147,12 +147,12 @@ module.exports = {
             });
             break;
           case "transactions":
-            method.transactions(conn).then((result) => {
-              res.writeHead(200, {
-                "Content-Type": "application/json; charset=utf-8",
-              });
-              res.end(JSON.stringify(result));
+            method.transactions(conn);
+
+            res.writeHead(200, {
+              "Content-Type": "application/json; charset=utf-8",
             });
+            res.end(JSON.stringify("Transaction success!"));
             break;
           case "pulpitshtml":
             method.pulpitshtml(conn).then((result) => {

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>List Products</title>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <h1><a href="http://localhost:3000/html/products/">List Products</a></h1>
+     <table>
+         <tr><th>ProductID</th><th>ProductName</th><th>ManufacturerID</th><th>CategoryID</th></tr>
+         {{#each product}}
+            <tr><td>{{this.product_id}}</td><td>{{this.product_name}}</td><td>{{this.manufacturer_id}}</td><td>{{this.category_id}}</td></tr>
+         {{/each}}
+     </table>
+
+     <h1>Find Product</h1>
+      <table>
+         <tr><th>ProductID</th><th>ProductName</th><th>ManufacturerID</th><th>CategoryID</th></tr>
+         {{#each find_product}}
+            <tr><td>{{this.product_id}}</td><td>{{this.product_name}}</td><td>{{this.manufacturer_id}}</td><td>{{this.category_id}}</td></tr>
+         {{/each}}
+     </table>
+        <label>ProductName</label>
+        <input type="text" name="product_name" id="findName" /><br><br>
+        <input type="submit" onclick="findProduct()" value="Find Product" />
+
+     <h1>Add Product</h1>
+     {{!-- <form action="../products" method="POST"> --}}
+        <label>ProductName</label>
+        <input type="text" name="product_name" id="product_name" /><br><br>
+        <label>ManufacturerID</label>
+        <input type="text" name="manufacturer_id" id="manufacturer_id" /><br><br>
+        <label>CategoryID</label>
+        <input type="text" name="category_id" id="category_id" /><br><br>
+        <input type="submit" onclick="addProduct()" value="Add Product" />
+     {{!-- </form> --}}
+  
+     <h1>Update Product</h1>
+     {{!-- <form action="../products?_method=PUT" method="POST"> --}}
+        <label>ProductID</label>
+        <input type="number" name="product_id" id="updID" /><br><br>
+        <label>ProductName</label>
+        <input type="text" name="product_name" id="updName" /><br><br>
+        <label>ManufacturerID</label>
+        <input type="text" name="manufacturer_id" id="upd_manufacturer_id" /><br><br>
+        <label>CategoryID</label>
+        <input type="text" name="category_id" id="upd_category_id" /><br><br>
+        <input type="submit" onclick="updProduct()" value="Update Product" />
+     {{!-- </form> --}}
+     
+     <h1>Delete Product</h1>
+     {{!-- <form action="../customer/<?" method="DELETE"> --}}
+        <label>ProducteID</label>
+        <input id="product_id" type="number" name="product_id" /><br><br>
+        <input type="submit" onClick="deleteProduct()" value="Delete Product" />
+     {{!-- </form> --}}
+     <script>
+         addProduct = () => {
+            let product_name = document.getElementById("product_name").value;
+            let manufacturer_id = document.getElementById("manufacturer_id").value;
+            let category_id = document.getElementById("category_id").value;
+            let bodyData = {
+               product_name: product_name,
+               manufacturer_id: manufacturer_id,
+               category_id: category_id,
+            }
+            console.log(`Data: ${bodyData}`);
+            fetch(`http://localhost:3000/products`, {
+                method: 'POST',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify(bodyData)
+            });
+            setTimeout(() => { window.location.reload(); }, 500);
+         }
+
+         updProduct = () => {
+            let product_id = document.getElementById("updID").value;
+            let product_name = document.getElementById("updName").value;
+            let manufacturer_id = document.getElementById("upd_manufacturer_id").value;
+            let category_id = document.getElementById("upd_category_id").value;
+            let bodyData = {
+               product_id: product_id,
+               product_name: product_name,
+               manufacturer_id: manufacturer_id,
+               category_id: category_id,
+            }
+            console.log(`Data: ${bodyData}`);
+            fetch(`http://localhost:3000/products`, {
+                method: 'PUT',
+                headers: {'Content-Type' : 'application/json'},
+                body: JSON.stringify(bodyData)
+            });
+            setTimeout(() => { window.location.reload(); }, 500);
+         }
+
+         findProduct = () => {
+            let product_name = document.getElementById("findName").value;
+            window.location.href = `http://localhost:3000/products/${product_name}`;
+         }
+
+         deleteProduct = () => {
+            let ID = document.getElementById("product_id").value;
+            console.log(ID);
+            fetch(`http://localhost:3000/products/${ID}`, {
+                method: 'DELETE',
+            });
+            setTimeout(() => { window.location.reload(); }, 500);
+         }
+     </script>
+</body>
+<html>
