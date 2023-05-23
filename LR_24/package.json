@@ -1,0 +1,27 @@
+{
+    "name": "LR_24",
+    "version": "1.0.0",
+    "description": "",
+    "main": "src/24_01.js",
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "cookie-session": "^1.4.0",
+        "cors": "^2.8.5",
+        "dotenv": "^8.6.0",
+        "express": "^4.17.3",
+        "express-handlebars": "^5.3.0",
+        "express-session": "^1.17.2",
+        "passport": "^0.4.1",
+        "passport-google-oauth20": "^2.0.0",
+        "passport-vkontakte": "^0.5.0",
+        "path": "^0.12.7"
+    },
+    "devDependencies": {},
+    "scripts": {
+        "dev": "nodemon index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC"
+}

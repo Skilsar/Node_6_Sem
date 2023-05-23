@@ -1,0 +1,11 @@
+{
+  "dependencies": {
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "nodemon": "^2.0.22",
+    "webdav": "^5.0.0"
+  },
+  "scripts": {
+    "start": "nodemon 28_01.js"
+  }
+}

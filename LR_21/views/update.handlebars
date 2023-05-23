@@ -1,0 +1,20 @@
+<div class="form-part list" style="height: auto;">
+    <div class="list-container" style="height: auto;">
+        {{#each phones}}
+            {{>phone}}
+        {{/each}}
+    </div>
+</div>
+<div class="form-part edit" data-key="{{targetPhone.id}}">
+    <div class="controls-wrapper">
+        <input type="text" name="fio" placeholder="fio" value="{{targetPhone.fio}}">
+        <input type="text" name="number" placeholder="Phone" value="{{targetPhone.number}}">
+        <button class="form-part control btn btn__update" onclick="update()">Update</button>
+        <button class="form-part control btn btn__delete" onclick="remove()">Delete</button>
+    </div>
+</div>
+<div class="controls-wrapper">
+    <div class="form-part control" style="margin-left: .25rem;">
+        <button class="btn btn__home" onclick="{{goBack}}">Back</button>
+    </div>
+</div>

@@ -1,0 +1,152 @@
+{
+	"info": {
+		"_postman_id": "5bc0d91d-ed3f-4b08-9600-7585a39f4a6e",
+		"name": "Node_LR_28",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23153024"
+	},
+	"item": [
+		{
+			"name": "MD",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/md/node",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"md",
+						"node"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RD",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/rd/node",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"rd",
+						"node"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UP",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/up/node.txt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"up",
+						"node.txt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DOWN",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/down/node.txt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"down",
+						"node.txt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DEL",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/del/node.txt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"del",
+						"node.txt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "COPY",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/copy/node.txt/node3.txt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"copy",
+						"node.txt",
+						"node3.txt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "MOVE",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:4000/move/node.txt/node_move.txt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "4000",
+					"path": [
+						"move",
+						"node.txt",
+						"node_move.txt"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

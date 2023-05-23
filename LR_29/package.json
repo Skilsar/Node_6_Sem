@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "jsonrpc-server-http-nats": "^0.1.14",
+    "nodemon": "^2.0.22"
+  },
+  "scripts": {
+    "start": "nodemon 29_01.js"
+  }
+}
