@@ -1,0 +1,15 @@
+{
+  "name": "telegram-bot",
+  "version": "1.0.0",
+  "description": "Telegram bot using Node.js Express",
+  "main": "31_01.js",
+  "scripts": {
+    "start": "nodemon 31_01.js",
+    "dev": "nodemon 31_01.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "node-telegram-bot-api": "^0.61.0",
+    "nodemon": "^2.0.22"
+  }
+}

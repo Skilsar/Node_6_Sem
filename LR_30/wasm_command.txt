@@ -1,0 +1,1 @@
+emcc -O3 -o p.wasm -s WASM=1 procedures.c --no-entry
