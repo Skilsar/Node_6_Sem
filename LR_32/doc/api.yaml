@@ -1,0 +1,133 @@
+openapi: 3.0.0
+info:
+  title: Телефонный справочник API
+  version: 1.0.0
+tags:
+  - name: Phonebook
+    description: API для работы со справочником телефонов
+paths:
+  /ts:
+    get:
+      tags:
+        - Phonebook
+      summary: Получить полный список телефонов из справочника
+      responses:
+        "200":
+          description: Успешный запрос. Возвращает список телефонов в формате JSON.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Уникальный идентификатор контакта.
+                    name:
+                      type: string
+                      description: Имя контакта.
+                    phone:
+                      type: string
+                      description: Номер телефона контакта.
+    post:
+      tags:
+        - Phonebook
+      summary: Добавить новый телефон в справочник
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Имя контакта.
+                phone:
+                  type: string
+                  description: Номер телефона контакта.
+      responses:
+        "200":
+          description: Успешный запрос. Возвращает добавленный контакт в формате JSON.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Уникальный идентификатор контакта.
+                  name:
+                    type: string
+                    description: Имя контакта.
+                  phone:
+                    type: string
+                    description: Номер телефона контакта.
+    put:
+      tags:
+        - Phonebook
+      summary: Скорректировать строку справочника
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: Уникальный идентификатор контакта, который требуется изменить.
+                name:
+                  type: string
+                  description: Новое имя контакта.
+                phone:
+                  type: string
+                  description: Новый номер телефона контакта.
+      responses:
+        "200":
+          description: Успешный запрос. Возвращает измененный контакт в формате JSON.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    description: Уникальный идентификатор контакта.
+                  name:
+                    type: string
+                    description: Имя контакта.
+                  phone:
+                    type: string
+                    description: Номер телефона контакта.
+    delete:
+      tags:
+        - Phonebook
+      summary: Удалить строку справочника
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+            description: Уникальный идентификатор контакта, который требуется удалить.
+      responses:
+        "200":
+          description: Успешный запрос. Возвращает обновленный список телефонов в формате JSON.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      description: Уникальный идентификатор контакта.
+                    name:
+                      type: string
+                      description: Имя контакта.
+                    phone:
+                      type: string
+                      description: Номер телефона контакта.
